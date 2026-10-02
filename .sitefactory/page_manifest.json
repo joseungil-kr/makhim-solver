@@ -1,0 +1,172 @@
+{
+  "version": "1.0",
+  "base_url": "https://makhim-solver.pages.dev",
+  "pages": [
+    {
+      "url": "/",
+      "primary_keyword": "누수 하수구막힘 싱크대막힘",
+      "intent_key": "home-plumbing-problem-hub",
+      "page_role": "COMMERCIAL_INFORMATION_HUB",
+      "parent": null,
+      "indexable": true,
+      "visual_intent": "신뢰감 있는 생활배관 점검",
+      "asset_slot": "HERO_WIDE",
+      "asset": "hero-main.webp"
+    },
+    {
+      "url": "/service/leak/",
+      "primary_keyword": "누수 원인",
+      "intent_key": "service-leak-causes",
+      "page_role": "SERVICE_INFORMATION_LANDING",
+      "parent": "/",
+      "indexable": true,
+      "visual_intent": "실내 배관 누수 점검",
+      "asset_slot": "SPLIT_VISUAL",
+      "asset": "leak-field.webp"
+    },
+    {
+      "url": "/guide/water-leak-check/",
+      "primary_keyword": "누수 확인 방법",
+      "intent_key": "guide-water-leak-check",
+      "page_role": "INFORMATION_GUIDE",
+      "parent": "/service/leak/",
+      "indexable": true,
+      "visual_intent": "누수 의심 부위 점검",
+      "asset_slot": "SPLIT_VISUAL",
+      "asset": "leak-field.webp"
+    },
+    {
+      "url": "/guide/water-meter-leak-check/",
+      "primary_keyword": "수도계량기 누수 확인",
+      "intent_key": "guide-water-meter-leak-check",
+      "page_role": "INFORMATION_GUIDE",
+      "parent": "/service/leak/",
+      "indexable": true,
+      "visual_intent": "급수 누수 점검",
+      "asset_slot": "SPLIT_VISUAL",
+      "asset": "leak-field.webp"
+    },
+    {
+      "url": "/guide/ceiling-water-leak/",
+      "primary_keyword": "천장 누수 원인",
+      "intent_key": "guide-ceiling-water-leak",
+      "page_role": "INFORMATION_GUIDE",
+      "parent": "/service/leak/",
+      "indexable": true,
+      "visual_intent": "누수 원인 점검",
+      "asset_slot": "SPLIT_VISUAL",
+      "asset": "leak-field.webp"
+    },
+    {
+      "url": "/service/drain-clog/",
+      "primary_keyword": "하수구막힘",
+      "intent_key": "service-drain-clog",
+      "page_role": "SERVICE_INFORMATION_LANDING",
+      "parent": "/",
+      "indexable": true,
+      "visual_intent": "배관 내부 막힘 점검",
+      "asset_slot": "SPLIT_VISUAL",
+      "asset": "camera-field.webp"
+    },
+    {
+      "url": "/guide/drain-water-slow/",
+      "primary_keyword": "하수구 물 안 내려감",
+      "intent_key": "guide-drain-water-slow",
+      "page_role": "INFORMATION_GUIDE",
+      "parent": "/service/drain-clog/",
+      "indexable": true,
+      "visual_intent": "배관 내부 흐름 점검",
+      "asset_slot": "SPLIT_VISUAL",
+      "asset": "camera-field.webp"
+    },
+    {
+      "url": "/guide/drain-backflow/",
+      "primary_keyword": "하수구 역류",
+      "intent_key": "guide-drain-backflow",
+      "page_role": "INFORMATION_GUIDE",
+      "parent": "/service/drain-clog/",
+      "indexable": true,
+      "visual_intent": "배관 내부 역류 원인 점검",
+      "asset_slot": "SPLIT_VISUAL",
+      "asset": "camera-field.webp"
+    },
+    {
+      "url": "/guide/drain-odor/",
+      "primary_keyword": "하수구 냄새 원인",
+      "intent_key": "guide-drain-odor",
+      "page_role": "INFORMATION_GUIDE",
+      "parent": "/service/drain-clog/",
+      "indexable": true,
+      "visual_intent": "배관 내부 상태 확인",
+      "asset_slot": "SPLIT_VISUAL",
+      "asset": "camera-field.webp"
+    },
+    {
+      "url": "/service/sink-clog/",
+      "primary_keyword": "싱크대막힘",
+      "intent_key": "service-sink-clog",
+      "page_role": "SERVICE_INFORMATION_LANDING",
+      "parent": "/",
+      "indexable": true,
+      "visual_intent": "싱크대 하부 배관 점검",
+      "asset_slot": "SPLIT_VISUAL",
+      "asset": "sink-field.webp"
+    },
+    {
+      "url": "/guide/sink-water-backflow/",
+      "primary_keyword": "싱크대 물 역류",
+      "intent_key": "guide-sink-water-backflow",
+      "page_role": "INFORMATION_GUIDE",
+      "parent": "/service/sink-clog/",
+      "indexable": true,
+      "visual_intent": "싱크대 배관 내부 점검",
+      "asset_slot": "SPLIT_VISUAL",
+      "asset": "camera-field.webp"
+    },
+    {
+      "url": "/guide/sink-grease-clog/",
+      "primary_keyword": "싱크대 기름때 막힘",
+      "intent_key": "guide-sink-grease-clog",
+      "page_role": "INFORMATION_GUIDE",
+      "parent": "/service/sink-clog/",
+      "indexable": true,
+      "visual_intent": "싱크대 배관 점검",
+      "asset_slot": "SPLIT_VISUAL",
+      "asset": "sink-field.webp"
+    },
+    {
+      "url": "/service/toilet-clog/",
+      "primary_keyword": "변기막힘",
+      "intent_key": "service-toilet-clog",
+      "page_role": "SERVICE_INFORMATION_LANDING",
+      "parent": "/",
+      "indexable": true,
+      "visual_intent": "배관 내부 상태 점검",
+      "asset_slot": "SPLIT_VISUAL",
+      "asset": "camera-field.webp"
+    },
+    {
+      "url": "/guide/toilet-water-rising/",
+      "primary_keyword": "변기 물 차오름",
+      "intent_key": "guide-toilet-water-rising",
+      "page_role": "INFORMATION_GUIDE",
+      "parent": "/service/toilet-clog/",
+      "indexable": true,
+      "visual_intent": "배관 내부 상태 점검",
+      "asset_slot": "SPLIT_VISUAL",
+      "asset": "camera-field.webp"
+    },
+    {
+      "url": "/region/yangcheon/",
+      "primary_keyword": "양천구 누수 하수구막힘",
+      "intent_key": "region-yangcheon-plumbing",
+      "page_role": "REGION_HUB_CANDIDATE",
+      "parent": "/",
+      "indexable": false,
+      "gate": "local-specificity-pending",
+      "visual_intent": "생활배관 점검",
+      "asset_slot": "SPLIT_VISUAL",
+      "asset": "camera-field.webp"
+    }
+  ]
+}
