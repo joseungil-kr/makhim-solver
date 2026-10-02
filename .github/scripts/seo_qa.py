@@ -96,6 +96,8 @@ for route, page in pages.items():
         clean = link.split("#", 1)[0].split("?", 1)[0]
         if not clean:
             continue
+        if clean.startswith("/assets/") or clean.endswith((".css", ".js", ".png", ".jpg", ".jpeg", ".webp", ".svg", ".ico", ".xml", ".txt")):
+            continue
         # Static directories are represented with trailing slash.
         if clean in inbound:
             inbound[clean] += 1
