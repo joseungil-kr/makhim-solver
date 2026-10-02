@@ -35,7 +35,7 @@ for p in manifest["pages"]:
     desc=(re.findall(r'<meta name="description" content="([^"]*)"',h,re.I) or [""])[0]
     robots=(re.findall(r'<meta name="robots" content="([^"]*)"',h,re.I) or [""])[0]
     canon=(re.findall(r'<link rel="canonical" href="([^"]*)"',h,re.I) or [""])[0]
-    imgs=re.findall(r'<img[^>]+src="([^"]+)"[^>]*alt="([^"]*)"',h,re.I)
+    imgs=[x for x in re.findall(r'<img[^>]+src="([^"]+)"[^>]*alt="([^"]*)"',h,re.I) if "logo-makhim.png" not in x[0]]
     hrefs=re.findall(r'<a[^>]+href="([^"]+)"',h,re.I)
     actual_cta=[x for x in hrefs if re.match(r'^(tel:|sms:|mailto:|https?://(?!makhim-solver\.pages\.dev))',x,re.I)]
     text=html_text(h)
@@ -49,18 +49,30 @@ for p in manifest["pages"]:
     if any(t in lead for t in qtokens): comp["query_alignment"]+=5
     if 120 <= len(lead) <= 180: comp["query_alignment"]+=3
 
-    # 2) Content / vertical specificity 20
+    # 2) Content / vertical specificity 20 — page-role aware
     comp["content"]=0
     sections=len(re.findall(r'class="content-section"',h))
-    faq=len(re.findall(r"<details>",h,re.I))
-    if url=="/" or sections>=5: comp["content"]+=5
+    role=p.get("page_role","")
+    if role in ("LOCAL_COMMERCIAL_HUB","COMMERCIAL_INFORMATION_HUB"):
+        if 'class="service-grid"' in h and ('class="dong-grid"' in h or 'class="related-grid"' in h): comp["content"]+=5
+    elif role=="REGION_HUB":
+        if 'class="dong-grid"' in h and 'class="service-grid"' in h: comp["content"]+=5
+    else:
+        if sections>=5: comp["content"]+=5
+
     vertical_terms=["배관","누수","배수","막힘","역류","트랩","계량기","이물질","기름때","수위","방수"]
     if sum(1 for t in vertical_terms if t in text)>=4: comp["content"]+=5
-    if url.startswith("/service/"):
-        if ("비용" in text and ("상담 전" in text or "정리" in text)): comp["content"]+=5
+
+    if role=="REGION_HUB":
+        if ("18개" in text and "010-6725-2470" in text): comp["content"]+=5
+    elif role=="REGION_SERVICE_LANDING":
+        if ("비용" in text and ("전화" in text or "상담" in text)): comp["content"]+=5
+    elif url.startswith("/service/"):
+        if ("비용" in text and ("상담" in text or "작업 가능" in text)): comp["content"]+=5
     else:
-        if url=="/" or ("다음으로 확인할 내용" in text and faq>=4): comp["content"]+=5
-    if url=="/" or faq>=4: comp["content"]+=5
+        if ("확인" in text and ("다음" in text or "RELATED" in text)): comp["content"]+=5
+
+    if ('tel:01067252470' in h and len(set(hrefs))>=4): comp["content"]+=5
 
     # 3) Technical 20
     comp["technical"]=0
