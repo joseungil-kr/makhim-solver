@@ -140,6 +140,27 @@ else:
     if f"Sitemap: {BASE}/sitemap.xml" not in robots:
         errors.append("robots.txt sitemap mismatch")
 
+# LOCAL MINI-HUB LINK GATE START
+local_re = re.compile(r"^/region/yangcheon/([^/]+)/(leak|drain-clog|sink-clog|toilet-clog)/$")
+local_services = ["leak","drain-clog","sink-clog","toilet-clog"]
+for route, page in pages.items():
+    m = local_re.match(route)
+    if not m or page["noindex"] or page["is_404"]:
+        continue
+    dong_slug, current_service = m.groups()
+    required = {"/region/yangcheon/"}
+    required.update(
+        f"/region/yangcheon/{dong_slug}/{service}/"
+        for service in local_services
+        if service != current_service
+    )
+    missing = sorted(required - set(page["links"]))
+    if missing:
+        errors.append(
+            f"{route}: incomplete same-dong mini-hub links -> {', '.join(missing)}"
+        )
+# LOCAL MINI-HUB LINK GATE END
+
 # CONTENT SIMILARITY — catch templated local pages that only swap place names.
 def token_set(value):
     value = re.sub(r"[^0-9A-Za-z가-힣\s]", " ", value.lower())

@@ -34,3 +34,15 @@
 }
 
 .dong-links{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-top:15px}.dong-links a{display:flex;align-items:center;justify-content:center;min-height:34px;padding:6px 8px;background:#f2f6f8;border:1px solid #d8e2e7;font-size:12px;font-weight:800;color:var(--deep)}.dong-links a:hover{background:var(--deep);color:#fff}@media(max-width:560px){.dong-links{grid-template-columns:1fr 1fr}}
+/* LOCAL MINI-HUB CROSSLINKS START */
+.same-dong-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:22px}
+.same-dong-grid .related-card{min-height:150px}
+.dong-service-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.dong-service-card{border:1px solid var(--line);padding:18px;background:#fff;display:flex;flex-direction:column;min-height:130px;transition:.2s}
+.dong-service-card:hover{background:#f5f8fa;transform:translateY(-2px)}
+.dong-service-card strong{font-size:17px}
+.dong-service-card span{font-size:13px;color:var(--muted);margin-top:5px}
+.dong-service-card b{font-size:12px;color:var(--blue);margin-top:auto;padding-top:15px}
+@media(max-width:900px){.same-dong-grid{grid-template-columns:1fr 1fr}.dong-service-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:560px){.same-dong-grid,.dong-service-grid{grid-template-columns:1fr}}
+/* LOCAL MINI-HUB CROSSLINKS END */
