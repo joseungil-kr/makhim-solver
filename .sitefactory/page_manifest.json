@@ -158,8 +158,8 @@
     },
     {
       "url": "/region/yangcheon/",
-      "primary_keyword": "양천구 누수 하수구막힘",
-      "intent_key": "yangcheon-local-hub",
+      "primary_keyword": "양천구 동별 누수",
+      "intent_key": "yangcheon-dong-leak-hub",
       "page_role": "REGION_HUB",
       "parent": "/",
       "indexable": true,
