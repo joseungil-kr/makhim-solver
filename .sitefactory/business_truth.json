@@ -12,8 +12,8 @@
     "싱크대막힘",
     "변기막힘"
   ],
-  "actual_contact_method": null,
-  "phone": null,
+  "actual_contact_method": "phone",
+  "phone": "010-6725-2470",
   "kakao_url": null,
   "inquiry_url": null,
   "service_area": null,
