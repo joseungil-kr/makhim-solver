@@ -1,0 +1,17 @@
+name: V1-V1.2 SEO Score
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  score:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Calculate page SEO scores
+        run: python .github/scripts/seo_score.py
