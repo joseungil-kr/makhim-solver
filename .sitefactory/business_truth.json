@@ -1,0 +1,24 @@
+{
+  "version": "1.0",
+  "brand_key": "makhim-solver",
+  "brand_name": "막힘해결사",
+  "business_name": "막힘해결사",
+  "business_number": "620-58-00917",
+  "business_address": "서울 양천구 목동중앙북로7",
+  "industry": "누수·배수·하수구·싱크대·변기 막힘",
+  "confirmed_services": [
+    "누수 정보·점검",
+    "하수구막힘",
+    "싱크대막힘",
+    "변기막힘"
+  ],
+  "actual_contact_method": null,
+  "phone": null,
+  "kakao_url": null,
+  "inquiry_url": null,
+  "service_area": null,
+  "business_hours": null,
+  "fixed_price": null,
+  "truth_policy": "operator_confirmed facts only; unknown values must not be invented",
+  "last_verified": "2026-10-02"
+}
