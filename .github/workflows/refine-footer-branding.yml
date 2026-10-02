@@ -1,0 +1,142 @@
+name: Refine Footer Branding
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - ".sitefactory/footer-branding.trigger"
+
+permissions:
+  contents: write
+
+jobs:
+  apply:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Refine footer text order and styling
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import re
+
+          center = 'Copyright © 인터피아드 ( https://interpiad.com ) 홈페이지 제작문의.'
+          right = '서비스 가능 여부와 비용은 현장 조건 확인 후 안내합니다.'
+          old_patterns = [
+              r'<span>copyright interpiad\.com \(홈페이지 제작문의\)</span>',
+              r'<span>Copyright[^<]*인터피아드[^<]*</span>',
+          ]
+
+          changed = []
+          for path in Path(".").rglob("*.html"):
+              if ".git" in path.parts or ".github" in path.parts:
+                  continue
+              html = path.read_text(encoding="utf-8")
+
+              # Normalize the standard footer-bottom area to left / center / right.
+              m = re.search(r'<div class="wrap footer-bottom">([\s\S]*?)</div>', html, re.I)
+              if not m:
+                  continue
+
+              left_match = re.search(r'<span>©\s*2026\s*막힘해결사</span>', m.group(1), re.I)
+              left = left_match.group(0) if left_match else '<span>© 2026 막힘해결사</span>'
+
+              replacement = (
+                  '<div class="wrap footer-bottom">'
+                  + left
+                  + f'<span class="footer-credit">{center}</span>'
+                  + f'<span class="footer-notice">{right}</span>'
+                  + '</div>'
+              )
+              new = html[:m.start()] + replacement + html[m.end():]
+
+              if new != html:
+                  path.write_text(new, encoding="utf-8")
+                  changed.append(str(path))
+
+          css_path = Path("assets/styles.css")
+          css = css_path.read_text(encoding="utf-8")
+          start = "/* FOOTER BRANDING V2 START */"
+          end = "/* FOOTER BRANDING V2 END */"
+          block = r'''/* FOOTER BRANDING V2 START */
+.footer .brand{
+  display:inline-flex;
+  width:max-content;
+  background:#fff;
+  padding:10px 16px;
+  border-radius:8px;
+  box-shadow:0 0 0 1px rgba(255,255,255,.2),0 8px 24px rgba(0,0,0,.18);
+}
+.footer .brand-logo.footer-logo{
+  width:220px;
+  max-width:100%;
+  filter:contrast(1.12) saturate(1.12);
+}
+.footer-bottom{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);
+  align-items:center;
+  gap:28px;
+  color:#fff;
+  font-size:14px;
+  font-weight:700;
+  line-height:1.5;
+}
+.footer-bottom span{color:#fff}
+.footer-bottom>span:first-child{justify-self:start}
+.footer-credit{
+  justify-self:center;
+  text-align:center;
+  white-space:nowrap;
+}
+.footer-notice{
+  justify-self:end;
+  text-align:right;
+}
+@media(max-width:900px){
+  .footer-bottom{
+    grid-template-columns:1fr;
+    gap:10px;
+    font-size:13px;
+  }
+  .footer-bottom>span:first-child,
+  .footer-credit,
+  .footer-notice{
+    justify-self:start;
+    text-align:left;
+    white-space:normal;
+  }
+  .footer .brand-logo.footer-logo{width:200px}
+}
+@media(max-width:560px){
+  .footer-bottom{font-size:13px}
+  .footer .brand{padding:9px 12px}
+  .footer .brand-logo.footer-logo{width:180px}
+}
+/* FOOTER BRANDING V2 END */'''
+
+          pattern = re.compile(re.escape(start)+r'[\s\S]*?'+re.escape(end))
+          if pattern.search(css):
+              css2 = pattern.sub(block, css)
+          else:
+              css2 = css.rstrip()+"\n"+block+"\n"
+
+          if css2 != css:
+              css_path.write_text(css2, encoding="utf-8")
+              changed.append(str(css_path))
+
+          print(f"Updated {len(changed)} files")
+          PY
+
+      - name: Commit footer refinement
+        run: |
+          if git diff --quiet; then
+            echo "No changes."
+            exit 0
+          fi
+          git config user.name "sitefactory-bot"
+          git config user.email "sitefactory-bot@users.noreply.github.com"
+          git add .
+          git commit -m "Refine footer copyright layout and logo visibility"
+          git push
