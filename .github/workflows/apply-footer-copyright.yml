@@ -1,0 +1,65 @@
+name: Apply Footer Copyright
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - ".sitefactory/footer-copyright.trigger"
+
+permissions:
+  contents: write
+
+jobs:
+  apply:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Add copyright text to every HTML footer
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import re
+
+          target = 'copyright interpiad.com (홈페이지 제작문의)'
+          changed = []
+
+          for path in Path(".").rglob("*.html"):
+              if ".git" in path.parts or ".github" in path.parts:
+                  continue
+              html = path.read_text(encoding="utf-8")
+
+              if target in html:
+                  continue
+
+              # Prefer the standard footer-bottom container.
+              pattern = re.compile(r'(<div class="wrap footer-bottom">)([\s\S]*?)(</div>)', re.I)
+              m = pattern.search(html)
+              if m:
+                  inner = m.group(2)
+                  new_inner = inner + f'<span>{target}</span>'
+                  html = html[:m.start()] + m.group(1) + new_inner + m.group(3) + html[m.end():]
+              elif "</footer>" in html:
+                  html = html.replace("</footer>", f'<div class="wrap footer-bottom"><span>{target}</span></div></footer>', 1)
+              else:
+                  continue
+
+              path.write_text(html, encoding="utf-8")
+              changed.append(str(path))
+
+          print(f"Updated {len(changed)} HTML files")
+          for p in changed:
+              print(p)
+          PY
+
+      - name: Commit footer update
+        run: |
+          if git diff --quiet; then
+            echo "No changes."
+            exit 0
+          fi
+          git config user.name "sitefactory-bot"
+          git config user.email "sitefactory-bot@users.noreply.github.com"
+          git add .
+          git commit -m "Add interpiad copyright footer text"
+          git push
