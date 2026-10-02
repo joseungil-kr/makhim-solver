@@ -32,3 +32,5 @@
  .hero.hero-team{min-height:640px}
  .hero.hero-team img{object-position:54% center}
 }
+
+.dong-links{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-top:15px}.dong-links a{display:flex;align-items:center;justify-content:center;min-height:34px;padding:6px 8px;background:#f2f6f8;border:1px solid #d8e2e7;font-size:12px;font-weight:800;color:var(--deep)}.dong-links a:hover{background:var(--deep);color:#fff}@media(max-width:560px){.dong-links{grid-template-columns:1fr 1fr}}
