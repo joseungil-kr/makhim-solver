@@ -1,28 +1,28 @@
 {
-  "version": "1.0",
+  "version": "2.0",
   "base_url": "https://makhim-solver.pages.dev",
   "pages": [
     {
       "url": "/",
-      "primary_keyword": "누수 하수구막힘 싱크대막힘",
-      "intent_key": "home-plumbing-problem-hub",
-      "page_role": "COMMERCIAL_INFORMATION_HUB",
+      "primary_keyword": "양천구 누수 하수구막힘 싱크대막힘 변기막힘",
+      "intent_key": "home-yangcheon-plumbing-hub",
+      "page_role": "LOCAL_COMMERCIAL_HUB",
       "parent": null,
       "indexable": true,
-      "visual_intent": "신뢰감 있는 생활배관 점검",
+      "visual_intent": "양천구 배관 서비스 기술자 팀",
       "asset_slot": "HERO_WIDE",
-      "asset": "hero-main.webp"
+      "asset": "hero-team.webp"
     },
     {
       "url": "/service/leak/",
-      "primary_keyword": "누수 원인",
-      "intent_key": "service-leak-causes",
-      "page_role": "SERVICE_INFORMATION_LANDING",
+      "primary_keyword": "양천구 누수",
+      "intent_key": "yangcheon-leak-service",
+      "page_role": "REGION_SERVICE_LANDING",
       "parent": "/",
       "indexable": true,
-      "visual_intent": "실내 배관 누수 점검",
+      "visual_intent": "주거공간 누수 탐지",
       "asset_slot": "SPLIT_VISUAL",
-      "asset": "leak-field.webp"
+      "asset": "leak-detect.webp"
     },
     {
       "url": "/guide/water-leak-check/",
@@ -33,7 +33,7 @@
       "indexable": true,
       "visual_intent": "누수 의심 부위 점검",
       "asset_slot": "SPLIT_VISUAL",
-      "asset": "leak-field.webp"
+      "asset": "leak-detect.webp"
     },
     {
       "url": "/guide/water-meter-leak-check/",
@@ -44,7 +44,7 @@
       "indexable": true,
       "visual_intent": "급수 누수 점검",
       "asset_slot": "SPLIT_VISUAL",
-      "asset": "leak-field.webp"
+      "asset": "leak-detect.webp"
     },
     {
       "url": "/guide/ceiling-water-leak/",
@@ -55,18 +55,18 @@
       "indexable": true,
       "visual_intent": "누수 원인 점검",
       "asset_slot": "SPLIT_VISUAL",
-      "asset": "leak-field.webp"
+      "asset": "leak-detect.webp"
     },
     {
       "url": "/service/drain-clog/",
-      "primary_keyword": "하수구막힘",
-      "intent_key": "service-drain-clog",
-      "page_role": "SERVICE_INFORMATION_LANDING",
+      "primary_keyword": "양천구 하수구막힘",
+      "intent_key": "yangcheon-drain-clog-service",
+      "page_role": "REGION_SERVICE_LANDING",
       "parent": "/",
       "indexable": true,
-      "visual_intent": "배관 내부 막힘 점검",
+      "visual_intent": "하수구 배관 내시경 점검",
       "asset_slot": "SPLIT_VISUAL",
-      "asset": "camera-field.webp"
+      "asset": "drain-camera.webp"
     },
     {
       "url": "/guide/drain-water-slow/",
@@ -77,7 +77,7 @@
       "indexable": true,
       "visual_intent": "배관 내부 흐름 점검",
       "asset_slot": "SPLIT_VISUAL",
-      "asset": "camera-field.webp"
+      "asset": "drain-camera.webp"
     },
     {
       "url": "/guide/drain-backflow/",
@@ -88,7 +88,7 @@
       "indexable": true,
       "visual_intent": "배관 내부 역류 원인 점검",
       "asset_slot": "SPLIT_VISUAL",
-      "asset": "camera-field.webp"
+      "asset": "drain-camera.webp"
     },
     {
       "url": "/guide/drain-odor/",
@@ -99,18 +99,18 @@
       "indexable": true,
       "visual_intent": "배관 내부 상태 확인",
       "asset_slot": "SPLIT_VISUAL",
-      "asset": "camera-field.webp"
+      "asset": "drain-camera.webp"
     },
     {
       "url": "/service/sink-clog/",
-      "primary_keyword": "싱크대막힘",
-      "intent_key": "service-sink-clog",
-      "page_role": "SERVICE_INFORMATION_LANDING",
+      "primary_keyword": "양천구 싱크대막힘",
+      "intent_key": "yangcheon-sink-clog-service",
+      "page_role": "REGION_SERVICE_LANDING",
       "parent": "/",
       "indexable": true,
-      "visual_intent": "싱크대 하부 배관 점검",
+      "visual_intent": "싱크대 배관 막힘 작업",
       "asset_slot": "SPLIT_VISUAL",
-      "asset": "sink-field.webp"
+      "asset": "sink-repair.webp"
     },
     {
       "url": "/guide/sink-water-backflow/",
@@ -121,7 +121,7 @@
       "indexable": true,
       "visual_intent": "싱크대 배관 내부 점검",
       "asset_slot": "SPLIT_VISUAL",
-      "asset": "camera-field.webp"
+      "asset": "sink-repair.webp"
     },
     {
       "url": "/guide/sink-grease-clog/",
@@ -132,18 +132,18 @@
       "indexable": true,
       "visual_intent": "싱크대 배관 점검",
       "asset_slot": "SPLIT_VISUAL",
-      "asset": "sink-field.webp"
+      "asset": "sink-repair.webp"
     },
     {
       "url": "/service/toilet-clog/",
-      "primary_keyword": "변기막힘",
-      "intent_key": "service-toilet-clog",
-      "page_role": "SERVICE_INFORMATION_LANDING",
+      "primary_keyword": "양천구 변기막힘",
+      "intent_key": "yangcheon-toilet-clog-service",
+      "page_role": "REGION_SERVICE_LANDING",
       "parent": "/",
       "indexable": true,
-      "visual_intent": "배관 내부 상태 점검",
+      "visual_intent": "변기막힘 장비 작업",
       "asset_slot": "SPLIT_VISUAL",
-      "asset": "camera-field.webp"
+      "asset": "toilet-unclog.webp"
     },
     {
       "url": "/guide/toilet-water-rising/",
@@ -154,19 +154,288 @@
       "indexable": true,
       "visual_intent": "배관 내부 상태 점검",
       "asset_slot": "SPLIT_VISUAL",
-      "asset": "camera-field.webp"
+      "asset": "toilet-unclog.webp"
     },
     {
       "url": "/region/yangcheon/",
       "primary_keyword": "양천구 누수 하수구막힘",
-      "intent_key": "region-yangcheon-plumbing",
-      "page_role": "REGION_HUB_CANDIDATE",
+      "intent_key": "yangcheon-local-hub",
+      "page_role": "REGION_HUB",
       "parent": "/",
-      "indexable": false,
-      "gate": "local-specificity-pending",
-      "visual_intent": "생활배관 점검",
+      "indexable": true,
+      "visual_intent": "양천구 배관 서비스 팀",
       "asset_slot": "SPLIT_VISUAL",
-      "asset": "camera-field.webp"
+      "asset": "hero-team.webp"
+    },
+    {
+      "url": "/region/yangcheon/mok1/leak/",
+      "primary_keyword": "양천구 목1동 누수",
+      "intent_key": "yangcheon-mok1-leak",
+      "page_role": "REGION_SERVICE_LANDING",
+      "parent": "/region/yangcheon/",
+      "indexable": true,
+      "local_evidence": [
+        "양천구 공식 행정동 목록",
+        "막힘해결사 양천구 사업장 주소"
+      ],
+      "visual_intent": "목1동 누수 탐지 안내",
+      "asset_slot": "SPLIT_VISUAL",
+      "asset": "leak-detect.webp"
+    },
+    {
+      "url": "/region/yangcheon/mok2/leak/",
+      "primary_keyword": "양천구 목2동 누수",
+      "intent_key": "yangcheon-mok2-leak",
+      "page_role": "REGION_SERVICE_LANDING",
+      "parent": "/region/yangcheon/",
+      "indexable": true,
+      "local_evidence": [
+        "양천구 공식 행정동 목록",
+        "막힘해결사 양천구 사업장 주소"
+      ],
+      "visual_intent": "목2동 누수 탐지 안내",
+      "asset_slot": "SPLIT_VISUAL",
+      "asset": "leak-detect.webp"
+    },
+    {
+      "url": "/region/yangcheon/mok3/leak/",
+      "primary_keyword": "양천구 목3동 누수",
+      "intent_key": "yangcheon-mok3-leak",
+      "page_role": "REGION_SERVICE_LANDING",
+      "parent": "/region/yangcheon/",
+      "indexable": true,
+      "local_evidence": [
+        "양천구 공식 행정동 목록",
+        "막힘해결사 양천구 사업장 주소"
+      ],
+      "visual_intent": "목3동 누수 탐지 안내",
+      "asset_slot": "SPLIT_VISUAL",
+      "asset": "leak-detect.webp"
+    },
+    {
+      "url": "/region/yangcheon/mok4/leak/",
+      "primary_keyword": "양천구 목4동 누수",
+      "intent_key": "yangcheon-mok4-leak",
+      "page_role": "REGION_SERVICE_LANDING",
+      "parent": "/region/yangcheon/",
+      "indexable": true,
+      "local_evidence": [
+        "양천구 공식 행정동 목록",
+        "막힘해결사 양천구 사업장 주소"
+      ],
+      "visual_intent": "목4동 누수 탐지 안내",
+      "asset_slot": "SPLIT_VISUAL",
+      "asset": "leak-detect.webp"
+    },
+    {
+      "url": "/region/yangcheon/mok5/leak/",
+      "primary_keyword": "양천구 목5동 누수",
+      "intent_key": "yangcheon-mok5-leak",
+      "page_role": "REGION_SERVICE_LANDING",
+      "parent": "/region/yangcheon/",
+      "indexable": true,
+      "local_evidence": [
+        "양천구 공식 행정동 목록",
+        "막힘해결사 양천구 사업장 주소"
+      ],
+      "visual_intent": "목5동 누수 탐지 안내",
+      "asset_slot": "SPLIT_VISUAL",
+      "asset": "leak-detect.webp"
+    },
+    {
+      "url": "/region/yangcheon/sinwol1/leak/",
+      "primary_keyword": "양천구 신월1동 누수",
+      "intent_key": "yangcheon-sinwol1-leak",
+      "page_role": "REGION_SERVICE_LANDING",
+      "parent": "/region/yangcheon/",
+      "indexable": true,
+      "local_evidence": [
+        "양천구 공식 행정동 목록",
+        "막힘해결사 양천구 사업장 주소"
+      ],
+      "visual_intent": "신월1동 누수 탐지 안내",
+      "asset_slot": "SPLIT_VISUAL",
+      "asset": "leak-detect.webp"
+    },
+    {
+      "url": "/region/yangcheon/sinwol2/leak/",
+      "primary_keyword": "양천구 신월2동 누수",
+      "intent_key": "yangcheon-sinwol2-leak",
+      "page_role": "REGION_SERVICE_LANDING",
+      "parent": "/region/yangcheon/",
+      "indexable": true,
+      "local_evidence": [
+        "양천구 공식 행정동 목록",
+        "막힘해결사 양천구 사업장 주소"
+      ],
+      "visual_intent": "신월2동 누수 탐지 안내",
+      "asset_slot": "SPLIT_VISUAL",
+      "asset": "leak-detect.webp"
+    },
+    {
+      "url": "/region/yangcheon/sinwol3/leak/",
+      "primary_keyword": "양천구 신월3동 누수",
+      "intent_key": "yangcheon-sinwol3-leak",
+      "page_role": "REGION_SERVICE_LANDING",
+      "parent": "/region/yangcheon/",
+      "indexable": true,
+      "local_evidence": [
+        "양천구 공식 행정동 목록",
+        "막힘해결사 양천구 사업장 주소"
+      ],
+      "visual_intent": "신월3동 누수 탐지 안내",
+      "asset_slot": "SPLIT_VISUAL",
+      "asset": "leak-detect.webp"
+    },
+    {
+      "url": "/region/yangcheon/sinwol4/leak/",
+      "primary_keyword": "양천구 신월4동 누수",
+      "intent_key": "yangcheon-sinwol4-leak",
+      "page_role": "REGION_SERVICE_LANDING",
+      "parent": "/region/yangcheon/",
+      "indexable": true,
+      "local_evidence": [
+        "양천구 공식 행정동 목록",
+        "막힘해결사 양천구 사업장 주소"
+      ],
+      "visual_intent": "신월4동 누수 탐지 안내",
+      "asset_slot": "SPLIT_VISUAL",
+      "asset": "leak-detect.webp"
+    },
+    {
+      "url": "/region/yangcheon/sinwol5/leak/",
+      "primary_keyword": "양천구 신월5동 누수",
+      "intent_key": "yangcheon-sinwol5-leak",
+      "page_role": "REGION_SERVICE_LANDING",
+      "parent": "/region/yangcheon/",
+      "indexable": true,
+      "local_evidence": [
+        "양천구 공식 행정동 목록",
+        "막힘해결사 양천구 사업장 주소"
+      ],
+      "visual_intent": "신월5동 누수 탐지 안내",
+      "asset_slot": "SPLIT_VISUAL",
+      "asset": "leak-detect.webp"
+    },
+    {
+      "url": "/region/yangcheon/sinwol6/leak/",
+      "primary_keyword": "양천구 신월6동 누수",
+      "intent_key": "yangcheon-sinwol6-leak",
+      "page_role": "REGION_SERVICE_LANDING",
+      "parent": "/region/yangcheon/",
+      "indexable": true,
+      "local_evidence": [
+        "양천구 공식 행정동 목록",
+        "막힘해결사 양천구 사업장 주소"
+      ],
+      "visual_intent": "신월6동 누수 탐지 안내",
+      "asset_slot": "SPLIT_VISUAL",
+      "asset": "leak-detect.webp"
+    },
+    {
+      "url": "/region/yangcheon/sinwol7/leak/",
+      "primary_keyword": "양천구 신월7동 누수",
+      "intent_key": "yangcheon-sinwol7-leak",
+      "page_role": "REGION_SERVICE_LANDING",
+      "parent": "/region/yangcheon/",
+      "indexable": true,
+      "local_evidence": [
+        "양천구 공식 행정동 목록",
+        "막힘해결사 양천구 사업장 주소"
+      ],
+      "visual_intent": "신월7동 누수 탐지 안내",
+      "asset_slot": "SPLIT_VISUAL",
+      "asset": "leak-detect.webp"
+    },
+    {
+      "url": "/region/yangcheon/sinjeong1/leak/",
+      "primary_keyword": "양천구 신정1동 누수",
+      "intent_key": "yangcheon-sinjeong1-leak",
+      "page_role": "REGION_SERVICE_LANDING",
+      "parent": "/region/yangcheon/",
+      "indexable": true,
+      "local_evidence": [
+        "양천구 공식 행정동 목록",
+        "막힘해결사 양천구 사업장 주소"
+      ],
+      "visual_intent": "신정1동 누수 탐지 안내",
+      "asset_slot": "SPLIT_VISUAL",
+      "asset": "leak-detect.webp"
+    },
+    {
+      "url": "/region/yangcheon/sinjeong2/leak/",
+      "primary_keyword": "양천구 신정2동 누수",
+      "intent_key": "yangcheon-sinjeong2-leak",
+      "page_role": "REGION_SERVICE_LANDING",
+      "parent": "/region/yangcheon/",
+      "indexable": true,
+      "local_evidence": [
+        "양천구 공식 행정동 목록",
+        "막힘해결사 양천구 사업장 주소"
+      ],
+      "visual_intent": "신정2동 누수 탐지 안내",
+      "asset_slot": "SPLIT_VISUAL",
+      "asset": "leak-detect.webp"
+    },
+    {
+      "url": "/region/yangcheon/sinjeong3/leak/",
+      "primary_keyword": "양천구 신정3동 누수",
+      "intent_key": "yangcheon-sinjeong3-leak",
+      "page_role": "REGION_SERVICE_LANDING",
+      "parent": "/region/yangcheon/",
+      "indexable": true,
+      "local_evidence": [
+        "양천구 공식 행정동 목록",
+        "막힘해결사 양천구 사업장 주소"
+      ],
+      "visual_intent": "신정3동 누수 탐지 안내",
+      "asset_slot": "SPLIT_VISUAL",
+      "asset": "leak-detect.webp"
+    },
+    {
+      "url": "/region/yangcheon/sinjeong4/leak/",
+      "primary_keyword": "양천구 신정4동 누수",
+      "intent_key": "yangcheon-sinjeong4-leak",
+      "page_role": "REGION_SERVICE_LANDING",
+      "parent": "/region/yangcheon/",
+      "indexable": true,
+      "local_evidence": [
+        "양천구 공식 행정동 목록",
+        "막힘해결사 양천구 사업장 주소"
+      ],
+      "visual_intent": "신정4동 누수 탐지 안내",
+      "asset_slot": "SPLIT_VISUAL",
+      "asset": "leak-detect.webp"
+    },
+    {
+      "url": "/region/yangcheon/sinjeong6/leak/",
+      "primary_keyword": "양천구 신정6동 누수",
+      "intent_key": "yangcheon-sinjeong6-leak",
+      "page_role": "REGION_SERVICE_LANDING",
+      "parent": "/region/yangcheon/",
+      "indexable": true,
+      "local_evidence": [
+        "양천구 공식 행정동 목록",
+        "막힘해결사 양천구 사업장 주소"
+      ],
+      "visual_intent": "신정6동 누수 탐지 안내",
+      "asset_slot": "SPLIT_VISUAL",
+      "asset": "leak-detect.webp"
+    },
+    {
+      "url": "/region/yangcheon/sinjeong7/leak/",
+      "primary_keyword": "양천구 신정7동 누수",
+      "intent_key": "yangcheon-sinjeong7-leak",
+      "page_role": "REGION_SERVICE_LANDING",
+      "parent": "/region/yangcheon/",
+      "indexable": true,
+      "local_evidence": [
+        "양천구 공식 행정동 목록",
+        "막힘해결사 양천구 사업장 주소"
+      ],
+      "visual_intent": "신정7동 누수 탐지 안내",
+      "asset_slot": "SPLIT_VISUAL",
+      "asset": "leak-detect.webp"
     }
   ]
 }
