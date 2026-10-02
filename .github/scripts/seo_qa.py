@@ -179,6 +179,15 @@ for route, page in pages.items():
     html = page["path"].read_text(encoding="utf-8")
     body = re.sub(r"<header[\s\S]*?</header>", " ", html, flags=re.I)
     body = re.sub(r"<footer[\s\S]*?</footer>", " ", body, flags=re.I)
+    # Exclude shared navigation/conversion blocks from duplicate-content comparison.
+    body = re.sub(
+        r'<section class="content-section same-dong-section">[\s\S]*?</section>',
+        " ", body, flags=re.I
+    )
+    body = re.sub(
+        r'<div class="cta-panel">[\s\S]*?</div>\s*</div>',
+        " ", body, flags=re.I
+    )
     body = re.sub(r"<script[\s\S]*?</script>", " ", body, flags=re.I)
     body = re.sub(r"<style[\s\S]*?</style>", " ", body, flags=re.I)
     body = re.sub(r"<[^>]+>", " ", body)
