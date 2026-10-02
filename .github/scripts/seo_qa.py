@@ -140,6 +140,39 @@ else:
     if f"Sitemap: {BASE}/sitemap.xml" not in robots:
         errors.append("robots.txt sitemap mismatch")
 
+# CONTENT SIMILARITY — catch templated local pages that only swap place names.
+def token_set(value):
+    value = re.sub(r"[^0-9A-Za-z가-힣\s]", " ", value.lower())
+    return {x for x in value.split() if len(x) >= 2}
+
+def similarity(a, b):
+    A, B = token_set(a), token_set(b)
+    if not A or not B:
+        return 0.0
+    return len(A & B) / len(A | B)
+
+indexable_text = []
+for route, page in pages.items():
+    if page["noindex"] or page["is_404"]:
+        continue
+    html = page["path"].read_text(encoding="utf-8")
+    body = re.sub(r"<header[\s\S]*?</header>", " ", html, flags=re.I)
+    body = re.sub(r"<footer[\s\S]*?</footer>", " ", body, flags=re.I)
+    body = re.sub(r"<script[\s\S]*?</script>", " ", body, flags=re.I)
+    body = re.sub(r"<style[\s\S]*?</style>", " ", body, flags=re.I)
+    body = re.sub(r"<[^>]+>", " ", body)
+    body = re.sub(r"\s+", " ", body).strip()
+    indexable_text.append((route, body))
+
+for i in range(len(indexable_text)):
+    for j in range(i + 1, len(indexable_text)):
+        ra, ta = indexable_text[i]
+        rb, tb = indexable_text[j]
+        # Local dong pages can share the service framework, but should not be near-clones.
+        sim = similarity(ta, tb)
+        if sim >= 0.72:
+            errors.append(f"high content similarity {sim:.2f}: {ra} <> {rb}")
+
 if errors:
     print("SEO QA FAILED")
     for e in errors:
