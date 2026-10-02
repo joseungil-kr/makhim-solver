@@ -1,0 +1,195 @@
+name: Apply Local Mini-Hub Internal Links
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - ".sitefactory/apply-internal-links.trigger"
+
+permissions:
+  contents: write
+
+jobs:
+  apply:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Patch 72 local pages and 4 service hubs
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import re
+
+          dongs = [
+              ("목1동","mok1"),("목2동","mok2"),("목3동","mok3"),("목4동","mok4"),("목5동","mok5"),
+              ("신월1동","sinwol1"),("신월2동","sinwol2"),("신월3동","sinwol3"),("신월4동","sinwol4"),
+              ("신월5동","sinwol5"),("신월6동","sinwol6"),("신월7동","sinwol7"),
+              ("신정1동","sinjeong1"),("신정2동","sinjeong2"),("신정3동","sinjeong3"),("신정4동","sinjeong4"),
+              ("신정6동","sinjeong6"),("신정7동","sinjeong7")
+          ]
+
+          services = [
+              ("leak","누수","천장·벽·바닥·계량기 증상"),
+              ("drain-clog","하수구막힘","욕실·세탁실·배수구 문제"),
+              ("sink-clog","싱크대막힘","주방 트랩·기름때·역류"),
+              ("toilet-clog","변기막힘","물차오름·이물질·수위 문제"),
+          ]
+
+          def same_dong_section(dong, slug, current):
+              cards = []
+              for seg,label,desc in services:
+                  if seg == current:
+                      continue
+                  cards.append(
+                      f'<a class="related-card" href="/region/yangcheon/{slug}/{seg}/">'
+                      f'<span>{seg.upper()}</span><strong>{dong} {label}</strong>'
+                      f'<small>{desc}</small><i>→</i></a>'
+                  )
+              cards.append(
+                  '<a class="related-card" href="/region/yangcheon/">'
+                  '<span>YANGCHEON</span><strong>양천구 18개 동 전체</strong>'
+                  '<small>동별 4개 서비스 페이지 허브</small><i>→</i></a>'
+              )
+              return (
+                  '<section class="content-section same-dong-section">'
+                  '<span class="idx">06</span>'
+                  f'<h2>{dong} 배관 문제 한 번에 보기</h2>'
+                  f'<p>{dong}에서 누수·하수구막힘·싱크대막힘·변기막힘 중 '
+                  '다른 증상도 함께 나타난다면 같은 동의 서비스 페이지를 이어서 확인할 수 있습니다.</p>'
+                  f'<div class="same-dong-grid">{"".join(cards)}</div>'
+                  '</section>'
+              )
+
+          local_re = re.compile(
+              r'<section class="content-section(?: same-dong-section)?">'
+              r'<span class="idx">06</span>[\s\S]*?</section>'
+              r'<section class="content-section"><span class="idx">FAQ</span>'
+          )
+
+          changed = []
+
+          # 1. 72 local pages: hub + same dong other 3 services.
+          for dong,slug in dongs:
+              for seg,label,desc in services:
+                  path = Path(f"region/yangcheon/{slug}/{seg}/index.html")
+                  html = path.read_text(encoding="utf-8")
+                  replacement = (
+                      same_dong_section(dong,slug,seg)
+                      + '<section class="content-section"><span class="idx">FAQ</span>'
+                  )
+                  new, count = local_re.subn(replacement, html, count=1)
+                  if count != 1:
+                      raise SystemExit(f"Section 06 patch failed: {path}")
+                  if new != html:
+                      path.write_text(new, encoding="utf-8")
+                      changed.append(str(path))
+
+          # 2. Each service hub directly links to its 18 local pages.
+          start = '<!-- LOCAL-DONG-LINKS-START -->'
+          end = '<!-- LOCAL-DONG-LINKS-END -->'
+          block_re = re.compile(re.escape(start)+r'[\s\S]*?'+re.escape(end))
+          for seg,label,desc in services:
+              path = Path(f"service/{seg}/index.html")
+              html = path.read_text(encoding="utf-8")
+              cards = "".join(
+                  f'<a class="dong-service-card" href="/region/yangcheon/{slug}/{seg}/">'
+                  f'<strong>{dong} {label}</strong><span>{desc}</span><b>지역 페이지 →</b></a>'
+                  for dong,slug in dongs
+              )
+              block = (
+                  start
+                  + '<section class="section wrap local-dong-links">'
+                  + '<div class="section-head split"><div>'
+                  + '<p class="eyebrow">YANGCHEON 18 DONG</p>'
+                  + f'<h2>양천구 18개 동 {label} 페이지</h2></div>'
+                  + f'<p>목1동부터 신정7동까지 양천구 18개 행정동별 {label} 페이지로 바로 이동할 수 있습니다.</p>'
+                  + '</div>'
+                  + f'<div class="dong-service-grid">{cards}</div>'
+                  + '</section>'
+                  + end
+              )
+              if block_re.search(html):
+                  new = block_re.sub(block, html)
+              else:
+                  new = html.replace("</main>", block+"</main>", 1)
+              if new != html:
+                  path.write_text(new, encoding="utf-8")
+                  changed.append(str(path))
+
+          # 3. Styling.
+          css_path = Path("assets/styles.css")
+          css = css_path.read_text(encoding="utf-8")
+          css_start = "/* LOCAL MINI-HUB CROSSLINKS START */"
+          css_end = "/* LOCAL MINI-HUB CROSSLINKS END */"
+          css_re = re.compile(re.escape(css_start)+r'[\s\S]*?'+re.escape(css_end))
+          css_block = """/* LOCAL MINI-HUB CROSSLINKS START */
+          .same-dong-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:22px}
+          .same-dong-grid .related-card{min-height:150px}
+          .dong-service-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+          .dong-service-card{border:1px solid var(--line);padding:18px;background:#fff;display:flex;flex-direction:column;min-height:130px;transition:.2s}
+          .dong-service-card:hover{background:#f5f8fa;transform:translateY(-2px)}
+          .dong-service-card strong{font-size:17px}
+          .dong-service-card span{font-size:13px;color:var(--muted);margin-top:5px}
+          .dong-service-card b{font-size:12px;color:var(--blue);margin-top:auto;padding-top:15px}
+          @media(max-width:900px){.same-dong-grid{grid-template-columns:1fr 1fr}.dong-service-grid{grid-template-columns:1fr 1fr}}
+          @media(max-width:560px){.same-dong-grid,.dong-service-grid{grid-template-columns:1fr}}
+          /* LOCAL MINI-HUB CROSSLINKS END */"""
+          if css_re.search(css):
+              new_css = css_re.sub(css_block, css)
+          else:
+              new_css = css.rstrip()+"\n"+css_block+"\n"
+          if new_css != css:
+              css_path.write_text(new_css, encoding="utf-8")
+              changed.append(str(css_path))
+
+          # 4. QA hard gate for same-dong mini-hub completeness.
+          qa_path = Path(".github/scripts/seo_qa.py")
+          qa = qa_path.read_text(encoding="utf-8")
+          qa_start = "# LOCAL MINI-HUB LINK GATE START"
+          qa_end = "# LOCAL MINI-HUB LINK GATE END"
+          qa_re = re.compile(re.escape(qa_start)+r'[\s\S]*?'+re.escape(qa_end))
+          qa_block = '''# LOCAL MINI-HUB LINK GATE START
+          local_re = re.compile(r"^/region/yangcheon/([^/]+)/(leak|drain-clog|sink-clog|toilet-clog)/$")
+          local_services = ["leak","drain-clog","sink-clog","toilet-clog"]
+          for route, page in pages.items():
+              m = local_re.match(route)
+              if not m or page["noindex"] or page["is_404"]:
+                  continue
+              dong_slug, current_service = m.groups()
+              required = {"/region/yangcheon/"}
+              required.update(
+                  f"/region/yangcheon/{dong_slug}/{service}/"
+                  for service in local_services
+                  if service != current_service
+              )
+              missing = sorted(required - set(page["links"]))
+              if missing:
+                  errors.append(
+                      f"{route}: incomplete same-dong mini-hub links -> {', '.join(missing)}"
+                  )
+          # LOCAL MINI-HUB LINK GATE END'''
+          if qa_re.search(qa):
+              new_qa = qa_re.sub(qa_block, qa)
+          else:
+              new_qa = qa.replace("# CONTENT SIMILARITY", qa_block+"\n\n# CONTENT SIMILARITY")
+          if new_qa != qa:
+              qa_path.write_text(new_qa, encoding="utf-8")
+              changed.append(str(qa_path))
+
+          print(f"Updated {len(changed)} files")
+          for x in changed:
+              print(x)
+          PY
+
+      - name: Commit internal-link architecture
+        run: |
+          if git diff --quiet; then
+            echo "No changes."
+            exit 0
+          fi
+          git config user.name "sitefactory-bot"
+          git config user.email "sitefactory-bot@users.noreply.github.com"
+          git add region/yangcheon service assets/styles.css .github/scripts/seo_qa.py
+          git commit -m "Complete same-dong four-service internal link architecture"
+          git push
