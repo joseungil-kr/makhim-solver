@@ -1,0 +1,51 @@
+name: Add Naver Site Verification
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - ".sitefactory/naver-verification.trigger"
+
+permissions:
+  contents: write
+
+jobs:
+  apply:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Insert Naver verification meta tag
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          tag = '<meta name="naver-site-verification" content="6d146f2c2d62c5273b1977cc5a14e38bcdc18987" />'
+          changed = []
+
+          for path in Path(".").rglob("*.html"):
+              if ".git" in path.parts or ".github" in path.parts:
+                  continue
+              html = path.read_text(encoding="utf-8")
+              if tag in html:
+                  continue
+              if "</head>" not in html:
+                  continue
+              html = html.replace("</head>", tag + "</head>", 1)
+              path.write_text(html, encoding="utf-8")
+              changed.append(str(path))
+
+          print(f"Updated {len(changed)} HTML files")
+          PY
+
+      - name: Commit verification tag
+        run: |
+          if git diff --quiet; then
+            echo "No changes."
+            exit 0
+          fi
+          git config user.name "sitefactory-bot"
+          git config user.email "sitefactory-bot@users.noreply.github.com"
+          git add .
+          git commit -m "Add Naver site verification meta tag"
+          git push
