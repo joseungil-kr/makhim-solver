@@ -76,7 +76,8 @@ jobs:
           key_url = f"{base}/{key}.txt"
           for attempt in range(5):
               try:
-                  req_key = urllib.request.Request(key_url, headers={"User-Agent":"Mozilla/5.0 (compatible; SiteFactory-IndexNow/1.0)"})\n                  with urllib.request.urlopen(req_key, timeout=15) as r:
+                  req_key = urllib.request.Request(key_url, headers={"User-Agent":"Mozilla/5.0 (compatible; SiteFactory-IndexNow/1.0)"})
+                  with urllib.request.urlopen(req_key, timeout=15) as r:
                       body = r.read().decode("utf-8").strip()
                       if r.status == 200 and body == key:
                           break
