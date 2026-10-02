@@ -1,0 +1,19 @@
+name: Site Factory SEO QA
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  seo-qa:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run structural SEO QA
+        run: python .github/scripts/seo_qa.py
