@@ -1,0 +1,112 @@
+name: Submit changed pages to Naver IndexNow
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "**/*.html"
+      - "sitemap.xml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  indexnow:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+
+      - name: Wait for Cloudflare Pages deployment
+        run: sleep 90
+
+      - name: Submit indexable changed URLs
+        env:
+          SITE_URL: https://makhim-solver.pages.dev
+          INDEXNOW_KEY: a4e6b813e8cb4bf08fd781f12f90c7d5
+        run: |
+          python - <<'PY'
+          import json, os, subprocess, time, urllib.request, urllib.parse
+          from pathlib import Path
+          import xml.etree.ElementTree as ET
+
+          base = os.environ["SITE_URL"].rstrip("/")
+          key = os.environ["INDEXNOW_KEY"]
+          sitemap = Path("sitemap.xml")
+
+          root = ET.parse(sitemap).getroot()
+          ns = {"s": "http://www.sitemaps.org/schemas/sitemap/0.9"}
+          allowed = {x.text.strip() for x in root.findall("s:url/s:loc", ns) if x.text}
+
+          event = os.environ.get("GITHUB_EVENT_NAME", "")
+          if event == "workflow_dispatch":
+              urls = sorted(allowed)
+          else:
+              try:
+                  changed = subprocess.check_output(
+                      ["git", "diff", "--name-only", "HEAD^", "HEAD"],
+                      text=True
+                  ).splitlines()
+              except Exception:
+                  changed = []
+
+              urls = set()
+              if "sitemap.xml" in changed:
+                  urls.update(allowed)
+
+              for p in changed:
+                  if not p.endswith(".html"):
+                      continue
+                  if p == "index.html":
+                      url = base + "/"
+                  elif p.endswith("/index.html"):
+                      url = base + "/" + p[:-10]
+                  else:
+                      url = base + "/" + p
+                  if url in allowed:
+                      urls.add(url)
+              urls = sorted(urls)
+
+          if not urls:
+              print("No indexable changed URLs.")
+              raise SystemExit(0)
+
+          key_url = f"{base}/{key}.txt"
+          for attempt in range(5):
+              try:
+                  with urllib.request.urlopen(key_url, timeout=15) as r:
+                      body = r.read().decode("utf-8").strip()
+                      if r.status == 200 and body == key:
+                          break
+              except Exception as e:
+                  print("Key check retry:", attempt + 1, e)
+              time.sleep(30)
+          else:
+              raise SystemExit("IndexNow key file is not live yet.")
+
+          payload = json.dumps({
+              "host": urllib.parse.urlparse(base).netloc,
+              "key": key,
+              "keyLocation": key_url,
+              "urlList": urls
+          }).encode("utf-8")
+
+          req = urllib.request.Request(
+              "https://searchadvisor.naver.com/indexnow",
+              data=payload,
+              headers={"Content-Type": "application/json; charset=utf-8"},
+              method="POST"
+          )
+          try:
+              with urllib.request.urlopen(req, timeout=30) as r:
+                  print("IndexNow status:", r.status)
+                  print("Submitted URLs:", len(urls))
+                  for u in urls:
+                      print(u)
+          except urllib.error.HTTPError as e:
+              print("IndexNow HTTP error:", e.code, e.read().decode("utf-8", "ignore"))
+              if e.code not in (200, 202):
+                  raise
+          PY
